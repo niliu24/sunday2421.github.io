@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="xmake工程模板以使用 xmake编译qt工程 中的 Quick 程序为例，其代码结构如下: 1234[+]: src&#x2F;main.qml   [+]: src&#x2F;main.cpp   [+]: src&#x2F;qml.qrc   [+]: xmake.lua  main.cpp 内容如下： 123456789101112131415#include &lt;QGuiApplication&gt; #inc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="qml工程模板">
+<meta property="og:url" content="https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/index.html">
+<meta property="og:site_name" content="知识碎片">
+<meta property="og:description" content="xmake工程模板以使用 xmake编译qt工程 中的 Quick 程序为例，其代码结构如下: 1234[+]: src&#x2F;main.qml   [+]: src&#x2F;main.cpp   [+]: src&#x2F;qml.qrc   [+]: xmake.lua  main.cpp 内容如下： 123456789101112131415#include &lt;QGuiApplication&gt; #inc">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-07-20T09:20:53.000Z">
+<meta property="article:modified_time" content="2024-07-21T14:03:44.888Z">
+<meta property="article:author" content="Yang Jian">
+<meta property="article:tag" content="qt">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>qml工程模板</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2024/07/20/card/qml%E5%9F%BA%E6%9C%AC%E5%85%83%E7%B4%A0/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2024/07/20/card/svn%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/&text=qml工程模板"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/&title=qml工程模板"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/&is_video=false&description=qml工程模板"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=qml工程模板&body=Check out this article: https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/&title=qml工程模板"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/&title=qml工程模板"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/&title=qml工程模板"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/&title=qml工程模板"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/&name=qml工程模板&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/&t=qml工程模板"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#xmake%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF"><span class="toc-number">1.</span> <span class="toc-text">xmake工程模板</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        qml工程模板
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Yang Jian</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-07-20T09:20:53.000Z" itemprop="datePublished">2024-07-20</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/card/">card</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/qt/" rel="tag">qt</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h4 id="xmake工程模板"><a href="#xmake工程模板" class="headerlink" title="xmake工程模板"></a>xmake工程模板</h4><p>以使用 <a href="xmake%E7%BC%96%E8%AF%91qt%E5%B7%A5%E7%A8%8B.md">xmake编译qt工程</a> 中的 Quick 程序为例，其代码结构如下:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[+]: src/main.qml   </span><br><span class="line">[+]: src/main.cpp   </span><br><span class="line">[+]: src/qml.qrc   </span><br><span class="line">[+]: xmake.lua</span><br></pre></td></tr></table></figure>
+
+<p><em>main.cpp</em> 内容如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QGuiApplication&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QQmlApplicationEngine&gt;</span>  </span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ‘Qt::AA_EnableHighDpiScaling’ is deprecated: High-DPI scaling is always enabled. This attribute no longer has any effect.     </span></span><br><span class="line">    <span class="comment">// QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling); 	</span></span><br><span class="line">    <span class="comment">// 创建Gui程序     </span></span><br><span class="line">    <span class="function">QGuiApplication <span class="title">app</span><span class="params">(argc, argv)</span></span>; 	</span><br><span class="line">    <span class="comment">// 创建qml引擎     </span></span><br><span class="line">    QQmlApplicationEngine engine; 	</span><br><span class="line">    <span class="comment">// 使用qml引擎导入qrc管理中qml文件     </span></span><br><span class="line">    engine.<span class="built_in">load</span>(<span class="built_in">QUrl</span>(<span class="built_in">QStringLiteral</span>(<span class="string">&quot;qrc:/main.qml&quot;</span>)));     </span><br><span class="line">    <span class="keyword">if</span> (engine.<span class="built_in">rootObjects</span>().<span class="built_in">isEmpty</span>())         </span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;   </span><br><span class="line">    <span class="keyword">return</span> app.<span class="built_in">exec</span>(); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>qml.qrc</em> 用于管理 qml 文件，其内容格式如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">RCC</span>&gt;</span>     </span><br><span class="line">    <span class="tag">&lt;<span class="name">qresource</span> <span class="attr">prefix</span>=<span class="string">&quot;/&quot;</span>&gt;</span>         </span><br><span class="line">        <span class="tag">&lt;<span class="name">file</span>&gt;</span>main.qml<span class="tag">&lt;/<span class="name">file</span>&gt;</span>     </span><br><span class="line">    <span class="tag">&lt;/<span class="name">qresource</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">RCC</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><em>main.qml</em> 内容如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">QtQuick</span> <span class="keyword">import</span> <span class="title class_">QtQuick</span>.<span class="property">Window</span>  </span><br><span class="line"><span class="keyword">import</span> <span class="title class_">QtQuick</span>.<span class="property">Controls</span>  </span><br><span class="line"><span class="title class_">Window</span> &#123;     </span><br><span class="line">    <span class="attr">id</span>: root     </span><br><span class="line">    <span class="attr">visible</span>: <span class="literal">true</span>     </span><br><span class="line">    <span class="attr">width</span>: <span class="number">640</span>     </span><br><span class="line">    <span class="attr">height</span>: <span class="number">480</span>     </span><br><span class="line">    <span class="attr">title</span>: <span class="title function_">qsTr</span>(<span class="string">&quot;Hello World&quot;</span>)     </span><br><span class="line">    <span class="title class_">Button</span> &#123;         </span><br><span class="line">        <span class="attr">text</span>: <span class="string">&quot;Hello Qt&quot;</span>         </span><br><span class="line">        <span class="attr">onClicked</span>: &#123;             </span><br><span class="line">          root.<span class="property">color</span> = <span class="title class_">Qt</span>.<span class="title function_">rgba</span>(<span class="title class_">Math</span>.<span class="title function_">random</span>(), <span class="title class_">Math</span>.<span class="title function_">random</span>(), <span class="title class_">Math</span>.<span class="title function_">random</span>(), <span class="number">1</span>);         </span><br><span class="line">        &#125;     </span><br><span class="line">    &#125; </span><br><span class="line">&#125;   </span><br></pre></td></tr></table></figure>
+
+<p>声明了一个 <code>Window</code> 对象作为 <code>Root</code>，并设置其相关属性；然后在该 Window 上添加一个 <code>Button</code>，设置该 Button 显示的文本，和被按下时会将 Window 的背景切换为另一种随机颜色。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#xmake%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF"><span class="toc-number">1.</span> <span class="toc-text">xmake工程模板</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/&text=qml工程模板"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/&title=qml工程模板"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/&is_video=false&description=qml工程模板"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=qml工程模板&body=Check out this article: https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/&title=qml工程模板"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/&title=qml工程模板"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/&title=qml工程模板"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/&title=qml工程模板"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/&name=qml工程模板&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://sunday2421.github.io/2024/07/20/card/qml%E5%B7%A5%E7%A8%8B%E6%A8%A1%E6%9D%BF/&t=qml工程模板"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2024
+    Yang Jian
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

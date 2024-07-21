@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="配置c&#x2F;c++开发环境使用 clangd 作为 lsp vscode 插件  clangd: 代码补全和静态检查 clang-format：代码格式化   解决 clangd 找不到当前项目子目录下头文件的问题  在 settings.json 文件中增加如下配置  123&quot;clangd.fallbackFlags&quot;: [    &quot;-I$&amp;#123;workspace">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vscode开发环境配置">
+<meta property="og:url" content="https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="知识碎片">
+<meta property="og:description" content="配置c&#x2F;c++开发环境使用 clangd 作为 lsp vscode 插件  clangd: 代码补全和静态检查 clang-format：代码格式化   解决 clangd 找不到当前项目子目录下头文件的问题  在 settings.json 文件中增加如下配置  123&quot;clangd.fallbackFlags&quot;: [    &quot;-I$&amp;#123;workspace">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-07-20T09:20:53.000Z">
+<meta property="article:modified_time" content="2024-07-21T14:00:46.113Z">
+<meta property="article:author" content="Yang Jian">
+<meta property="article:tag" content="cpp">
+<meta property="article:tag" content="vscode">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>vscode开发环境配置</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2024/07/20/card/vscode%E5%8A%9F%E8%83%BD%E9%85%8D%E7%BD%AE/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2024/07/20/card/wsl%E5%91%BD%E4%BB%A4/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&text=vscode开发环境配置"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&title=vscode开发环境配置"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&is_video=false&description=vscode开发环境配置"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=vscode开发环境配置&body=Check out this article: https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&title=vscode开发环境配置"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&title=vscode开发环境配置"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&title=vscode开发环境配置"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&title=vscode开发环境配置"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&name=vscode开发环境配置&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&t=vscode开发环境配置"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEc-c-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">配置c&#x2F;c++开发环境</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-clangd-%E4%BD%9C%E4%B8%BA-lsp"><span class="toc-number">1.1.</span> <span class="toc-text">使用 clangd 作为 lsp</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEssh%E6%9C%8D%E5%8A%A1"><span class="toc-number">2.</span> <span class="toc-text">配置ssh服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5"><span class="toc-number">3.</span> <span class="toc-text">设置代码片段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Code-Runner%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="toc-number">4.</span> <span class="toc-text">Code Runner插件配置</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        vscode开发环境配置
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Yang Jian</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-07-20T09:20:53.000Z" itemprop="datePublished">2024-07-20</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/card/">card</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/cpp/" rel="tag">cpp</a>, <a class="tag-link-link" href="/tags/vscode/" rel="tag">vscode</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h4 id="配置c-c-开发环境"><a href="#配置c-c-开发环境" class="headerlink" title="配置c/c++开发环境"></a>配置c/c++开发环境</h4><h5 id="使用-clangd-作为-lsp"><a href="#使用-clangd-作为-lsp" class="headerlink" title="使用 clangd 作为 lsp"></a>使用 clangd 作为 lsp</h5><ul>
+<li><p>vscode 插件</p>
+<ul>
+<li><code>clangd</code>: 代码补全和静态检查</li>
+<li><code>clang-format</code>：代码格式化</li>
+</ul>
+</li>
+<li><p>解决 clangd 找不到当前项目子目录下头文件的问题</p>
+<ol>
+<li><p>在 <em>settings.json</em> 文件中增加如下配置</p>
+ <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;clangd.fallbackFlags&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;-I$&#123;workspaceFolder&#125;/include&quot;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure></li>
+<li><p>或者使用 cmake/xmake 等工具生成 <em>compile_commands.json</em> 文件</p>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="配置ssh服务"><a href="#配置ssh服务" class="headerlink" title="配置ssh服务"></a>配置ssh服务</h4><ul>
+<li>设置 vscoed 免密码登录 <ul>
+<li>将 <em>.ssh\id_rsa.pub</em> 文件复制并改名为 _authorized_keys_，然后拷贝到服务端的 <em>~/.ssh/</em> 目录下 </li>
+</ul>
+</li>
+<li>服务端重装后，vscode 连接相同 ip 出现 <code>&quot;Host key verification failed&quot;</code> 错误，重装系统后 ssh 签名不一致，在本地主机上执行 <code>ssh-keygen -R [server_ip]</code> 后重新设置连接 </li>
+</ul>
+<h4 id="设置代码片段"><a href="#设置代码片段" class="headerlink" title="设置代码片段"></a>设置代码片段</h4><p>官方参考文档 <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/editor/userdefinedsnippets">Snippets in Visual Studio Code</a></p>
+<ol>
+<li><p><code>ctrl+shift+p</code> 调出命令控制台，输入 snippet 选择<strong>代码片段：配置用户代码片段</strong>，然后选择对应的编码语言将打开对应的配置文件</p>
+</li>
+<li><p>参考配置文件中的注释，编写自定义片段即可</p>
+ <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;file comments&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;prefix&quot;</span><span class="punctuation">:</span> <span class="string">&quot;file-c&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;body&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;//! Copyright (c) rust. All rights reserved.&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;//! Author: yangjian&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;//! Date: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;//! # Description&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;//! $1&quot;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;File comments&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="Code-Runner插件配置"><a href="#Code-Runner插件配置" class="headerlink" title="Code Runner插件配置"></a>Code Runner插件配置</h4><ul>
+<li><p>vscode 的单文件代码运行插件，支持 c/c++、python、lua 等代码一键运行，实质上还是通过命令行来执行代码，可在 <em>settings.json</em> 文件中进行自定义</p>
+  <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;code-runner.executorMap&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;c&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cd $dir &amp;&amp; gcc -g -I$workspaceRoot/includ $fileName -o $fileNameWithoutExt &amp;&amp; $dir$fileNameWithoutExt&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;cpp&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cd $dir &amp;&amp; make obj=$fileName &amp;&amp; ./$fileNameWithoutExt &amp;&amp; rm $fileNameWithoutExt&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;python&quot;</span><span class="punctuation">:</span> <span class="string">&quot;python -u&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;lua&quot;</span><span class="punctuation">:</span> <span class="string">&quot;lua&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;shellscript&quot;</span><span class="punctuation">:</span> <span class="string">&quot;bash&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;rust&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cd $dir &amp;&amp; rustc $fileName &amp;&amp; $dir$fileNameWithoutExt&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure></li>
+<li><p>支持的内置变量</p>
+<ul>
+<li><code>$dir</code>: 执行文件所在目录</li>
+<li><code>$fileName</code>: 执行文件名</li>
+<li><code>$fileNameWisthoutExt</code>: 执行文件名去掉类型后缀</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEc-c-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">配置c&#x2F;c++开发环境</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-clangd-%E4%BD%9C%E4%B8%BA-lsp"><span class="toc-number">1.1.</span> <span class="toc-text">使用 clangd 作为 lsp</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEssh%E6%9C%8D%E5%8A%A1"><span class="toc-number">2.</span> <span class="toc-text">配置ssh服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5"><span class="toc-number">3.</span> <span class="toc-text">设置代码片段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Code-Runner%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="toc-number">4.</span> <span class="toc-text">Code Runner插件配置</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&text=vscode开发环境配置"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&title=vscode开发环境配置"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&is_video=false&description=vscode开发环境配置"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=vscode开发环境配置&body=Check out this article: https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&title=vscode开发环境配置"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&title=vscode开发环境配置"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&title=vscode开发环境配置"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&title=vscode开发环境配置"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&name=vscode开发环境配置&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://sunday2421.github.io/2024/07/20/card/vscode%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&t=vscode开发环境配置"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2024
+    Yang Jian
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
